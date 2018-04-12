@@ -1,22 +1,27 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Container, Content, Header, Body, Title } from 'native-base';
 import KeyPad from './KeyPad';
 
 export default class App extends React.Component {
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <KeyPad />
-      </View>
+      <Container>
+        <Header>
+          <Body>
+            <Title>Barbell Weight Calculator</Title>
+          </Body>
+        </Header>
+        <Content>
+          <KeyPad />
+        </Content>
+      </Container>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
