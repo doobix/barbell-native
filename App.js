@@ -22,23 +22,17 @@ export default class App extends React.Component {
           </Body>
         </Header>
         <Content>
-          <Grid>
-            <Col size={2}>
-              <Form>
-                <Item floatingLabel last>
-                  <Label>Target barbell weight</Label>
-                  <Input keyboardType='numeric' />
-                </Item>
-              </Form>
-            </Col>
-            <Col size={1}>
-              <View style={styles.buttonArea}>
-                <Button primary style={styles.calculateButton}>
-                  <Text>Calculate!</Text>
-                </Button>
-              </View>
-            </Col>
-          </Grid>
+          <Form>
+            <Item floatingLabel last>
+              <Label>Target barbell weight</Label>
+              <Input keyboardType='numeric' />
+            </Item>
+          </Form>
+          <View style={styles.calculateButton}>
+            <Button primary>
+              <Text>Calculate!</Text>
+            </Button>
+          </View>
         </Content>
       </Container>
     );
@@ -46,13 +40,11 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  buttonArea: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   calculateButton: {
-    marginRight: 'auto',
-    marginLeft: 'auto',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
   },
 });
