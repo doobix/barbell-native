@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Content, Header, Body, Title, Form, Item, Label, Input, Button, Text } from 'native-base';
+import { Card, CardItem, Container, Content, Header, Body, Title, Item, Label, Input, Button, Text } from 'native-base';
 import { StyleSheet, View } from 'react-native';
-import KeyPad from './KeyPad';
+import WeightResults from './WeightResults';
 
 const DEFAULT_WEIGHT = '310';
 const DEFAULT_WEIGHT_MAP = {
@@ -26,10 +26,11 @@ export default class App extends React.Component {
       calculatedWeights: [],
       calculatedWeight: 0,
       leftoverWeight: 0,
+      hasCalculatedWeights: false,
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
@@ -44,18 +45,27 @@ export default class App extends React.Component {
             <Title>Barbell Weight Calculator</Title>
           </Body>
         </Header>
-        <Content>
-          <Form>
-            <Item floatingLabel last>
-              <Label>Target barbell weight</Label>
-              <Input keyboardType='numeric' value={this.state.inputWeight} onChangeText={(text) => this.onChangeSetWeight(text)} />
-            </Item>
-          </Form>
-          <View style={styles.calculateButton}>
-            <Button primary onPress={() => this.onPressCalculate()}>
-              <Text>Calculate!</Text>
-            </Button>
-          </View>
+        <Content padder>
+          <Card>
+            <CardItem>
+              <Item floatingLabel>
+                <Label>Target barbell weight</Label>
+                <Input keyboardType='numeric' value={this.state.inputWeight} onChangeText={(text) => this.onChangeSetWeight(text)} />
+              </Item>
+            </CardItem>
+            <CardItem>
+              <View style={styles.calculateButton}>
+                <Button primary onPress={() => this.onPressCalculate()}>
+                  <Text>Calculate!</Text>
+                </Button>
+              </View>
+            </CardItem>
+          </Card>
+          <WeightResults
+            calculatedWeights={this.state.calculatedWeights}
+            calculatedWeight={this.state.calculatedWeight}
+            leftoverWeight={this.state.leftoverWeight}
+          />
         </Content>
       </Container>
     );
@@ -103,6 +113,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
   },
 });
