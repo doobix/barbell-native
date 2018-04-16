@@ -27,6 +27,7 @@ export default class App extends React.Component {
       calculatedWeight: 0,
       leftoverWeight: 0,
       hasCalculatedWeights: false,
+      currentView: 'calculator',
     };
   }
 
@@ -46,34 +47,15 @@ export default class App extends React.Component {
           </Body>
         </Header>
         <Content padder>
-          <Card>
-            <CardItem>
-              <Item floatingLabel>
-                <Label>Target barbell weight</Label>
-                <Input keyboardType='numeric' value={this.state.inputWeight} onChangeText={(text) => this.onChangeSetWeight(text)} />
-              </Item>
-            </CardItem>
-            <CardItem>
-              <View style={styles.calculateButton}>
-                <Button primary onPress={() => this.onPressCalculate()}>
-                  <Text>Calculate!</Text>
-                </Button>
-              </View>
-            </CardItem>
-          </Card>
-          <WeightResults
-            calculatedWeights={this.state.calculatedWeights}
-            calculatedWeight={this.state.calculatedWeight}
-            leftoverWeight={this.state.leftoverWeight}
-          />
+          {this.renderView()}
         </Content>
         <Footer>
           <FooterTab>
-            <Button vertical active>
+            <Button vertical active={this.state.currentView === 'calculator'} onPress={() => this.onPressChangeView('calculator')}>
               <Icon name="calculator" />
               <Text>Calculator</Text>
             </Button>
-            <Button vertical>
+            <Button vertical active={this.state.currentView === 'settings'} onPress={() => this.onPressChangeView('settings')}>
               <Icon name="settings" />
               <Text>Settings</Text>
             </Button>
@@ -83,12 +65,47 @@ export default class App extends React.Component {
     );
   }
 
+  renderView() {
+    if (this.state.currentView === 'settings') {
+      return null;
+    }
+
+    return (
+      <View>
+        <Card>
+          <CardItem>
+            <Item floatingLabel>
+              <Label>Target barbell weight</Label>
+              <Input keyboardType='numeric' value={this.state.inputWeight} onChangeText={(text) => this.onChangeSetWeight(text)} />
+            </Item>
+          </CardItem>
+          <CardItem>
+            <View style={styles.calculateButton}>
+              <Button primary onPress={() => this.onPressCalculate()}>
+                <Text>Calculate!</Text>
+              </Button>
+            </View>
+          </CardItem>
+        </Card>,
+        <WeightResults
+          calculatedWeights={this.state.calculatedWeights}
+          calculatedWeight={this.state.calculatedWeight}
+          leftoverWeight={this.state.leftoverWeight}
+        />
+      </View>
+    );
+  }
+
   onChangeSetWeight(weight) {
     this.setState({inputWeight: weight});
   }
 
   onPressCalculate() {
     this.calculateWeights();
+  }
+
+  onPressChangeView(currentView) {
+    this.setState({ currentView });
   }
 
   calculateWeights() {
