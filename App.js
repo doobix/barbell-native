@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardItem, Container, Content, Header, Body, Title, Item, Label, Input, Button, Text } from 'native-base';
+import { Card, CardItem, Container, Content, Header, Body, Title, Item, Label, Input, Button, Text, Footer, FooterTab, Icon } from 'native-base';
 import { StyleSheet, View } from 'react-native';
 import WeightResults from './WeightResults';
 
@@ -67,6 +67,18 @@ export default class App extends React.Component {
             leftoverWeight={this.state.leftoverWeight}
           />
         </Content>
+        <Footer>
+          <FooterTab>
+            <Button vertical active>
+              <Icon name="calculator" />
+              <Text>Calculator</Text>
+            </Button>
+            <Button vertical>
+              <Icon name="settings" />
+              <Text>Settings</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </Container>
     );
   }
