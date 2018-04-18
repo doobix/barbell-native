@@ -23,7 +23,7 @@ export default class WeightResults extends React.Component {
     let weightElements = [];
     this.props.calculatedWeights.forEach((weightObj) => {
       weightElements.push(
-        <CardItem key={weightObj.weight}>
+        <CardItem key={`results-${weightObj.weight}`}>
           <Text>
             {weightObj.count} x {weightObj.weight} lbs
           </Text>
@@ -44,14 +44,17 @@ export default class WeightResults extends React.Component {
       );
     }
 
-    return [leftoverWeightElement,
-      <Card>
-        <CardItem header bordered>
-          <Text>{ADD_WEIGHT_MESSAGE.replace('{calculatedWeight}', this.props.calculatedWeight)}</Text>
-        </CardItem>
-        {weightElements}
-      </Card>
-    ];
+    return (
+      <React.Fragment>
+        {leftoverWeightElement}
+        <Card>
+          <CardItem header bordered>
+            <Text>{ADD_WEIGHT_MESSAGE.replace('{calculatedWeight}', this.props.calculatedWeight)}</Text>
+          </CardItem>
+          {weightElements}
+        </Card>
+      </React.Fragment>
+    );
   }
 }
 

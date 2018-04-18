@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardItem, Container, Content, Header, Body, Title, Item, Label, Input, Button, Text, Footer, FooterTab, Icon } from 'native-base';
+import { Card, CardItem, Container, Content, Header, Body, Title, Item, Label, Input, Button, Text, Footer, FooterTab, Icon, ListItem, CheckBox } from 'native-base';
 import { StyleSheet, View } from 'react-native';
 import WeightResults from './WeightResults';
 
@@ -67,7 +67,7 @@ export default class App extends React.Component {
 
   renderView() {
     if (this.state.currentView === 'settings') {
-      return null;
+      return this.renderSettingsView();
     }
 
     return (
@@ -94,6 +94,45 @@ export default class App extends React.Component {
         />
       </View>
     );
+  }
+
+  renderSettingsView() {
+    return (
+      <View>
+        <Card>
+          <CardItem header bordered>
+            <Text>Available Weights</Text>
+          </CardItem>
+          {this.renderWeightCheckboxes()}
+        </Card>
+      </View>
+    );
+  }
+
+  renderWeightCheckboxes() {
+    const weightCheckboxes = [];
+    this.state.weights.forEach((weight) => {
+      weightCheckboxes.push(
+        <ListItem key={`checkbox-${weight}`}>
+          <CheckBox checked={this.state.weightMap[weight]} onPress={() => this.toggleWeightCheckbox(weight)} />
+          <Body>
+            <Text>{weight} lbs</Text>
+          </Body>
+        </ListItem>
+      );
+    });
+    return weightCheckboxes;
+  }
+
+  toggleWeightCheckbox(weight) {
+    const weightMap = {
+      ...this.state.weightMap,
+      [weight]: !this.state.weightMap[weight],
+    }
+    this.setState({
+      ...this.state,
+      weightMap,
+    });
   }
 
   onChangeSetWeight(inputWeight) {
