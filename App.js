@@ -51,11 +51,19 @@ export default class App extends React.Component {
         </Content>
         <Footer>
           <FooterTab>
-            <Button vertical active={this.state.currentView === 'calculator'} onPress={() => this.onPressChangeView('calculator')}>
+            <Button
+              vertical
+              active={this.state.currentView === 'calculator'}
+              onPress={() => this.onPressChangeView('calculator')}
+            >
               <Icon name="calculator" />
               <Text>Calculator</Text>
             </Button>
-            <Button vertical active={this.state.currentView === 'settings'} onPress={() => this.onPressChangeView('settings')}>
+            <Button
+              vertical
+              active={this.state.currentView === 'settings'}
+              onPress={() => this.onPressChangeView('settings')}
+            >
               <Icon name="settings" />
               <Text>Settings</Text>
             </Button>
@@ -68,8 +76,11 @@ export default class App extends React.Component {
   renderView() {
     if (this.state.currentView === 'settings') {
       return this.renderSettingsView();
-    }
+    } 
+    return this.renderMainView();
+  }
 
+  renderMainView() {
     return (
       <View>
         <Card>
