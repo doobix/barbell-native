@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card, CardItem, Container, Content, Header, Body, Title, Item, Label, Input, Button, Text, Footer, FooterTab, Icon, ListItem, CheckBox } from 'native-base';
-import { StyleSheet, View } from 'react-native';
+import { Body, Button, Container, Content, Footer, FooterTab, Header, Icon, Title, Text } from 'native-base';
+import MainView from './MainView';
 import SettingsView from './SettingsView';
-import WeightResults from './WeightResults';
 
 const DEFAULT_WEIGHT = '310';
 const DEFAULT_WEIGHT_MAP = {
@@ -78,43 +77,25 @@ export default class App extends React.Component {
     if (this.state.currentView === 'settings') {
       return (
         <SettingsView
-          toggleWeightCheckbox={this.toggleWeightCheckbox.bind(this)}
+          toggleWeightCheckbox={this.toggleWeightCheckbox}
           weights={this.state.weights}
           weightMap={this.state.weightMap}
         />
       );
     } 
-    return this.renderMainView();
-  }
-
-  renderMainView() {
     return (
-      <View>
-        <Card>
-          <CardItem>
-            <Item floatingLabel>
-              <Label>Target barbell weight</Label>
-              <Input keyboardType='numeric' value={this.state.inputWeight} onChangeText={(text) => this.onChangeSetWeight(text)} />
-            </Item>
-          </CardItem>
-          <CardItem>
-            <View style={styles.calculateButton}>
-              <Button primary onPress={() => this.onPressCalculate()}>
-                <Text>Calculate!</Text>
-              </Button>
-            </View>
-          </CardItem>
-        </Card>,
-        <WeightResults
-          calculatedWeights={this.state.calculatedWeights}
-          calculatedWeight={this.state.calculatedWeight}
-          leftoverWeight={this.state.leftoverWeight}
-        />
-      </View>
+      <MainView
+        calculatedWeights={this.state.calculatedWeights}
+        calculatedWeight={this.state.calculatedWeight}
+        inputWeight={this.state.inputWeight}
+        leftoverWeight={this.state.leftoverWeight}
+        onChangeSetWeight={this.onChangeSetWeight}
+        onPressCalculate={this.onPressCalculate}
+      />
     );
   }
 
-  toggleWeightCheckbox(weight) {
+  toggleWeightCheckbox = (weight) => {
     const weightMap = {
       ...this.state.weightMap,
       [weight]: !this.state.weightMap[weight],
@@ -129,7 +110,7 @@ export default class App extends React.Component {
     this.setState({ inputWeight });
   }
 
-  onPressCalculate() {
+  onPressCalculate = () => {
     this.calculateWeights();
   }
 
@@ -164,12 +145,3 @@ export default class App extends React.Component {
     });
   }
 }
-
-const styles = StyleSheet.create({
-  calculateButton: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
