@@ -11,12 +11,19 @@ export default class MainView extends React.Component {
           <CardItem>
             <Item floatingLabel>
               <Label>Target barbell weight</Label>
-              <Input keyboardType='numeric' value={this.props.inputWeight} onChangeText={(text) => this.props.onChangeSetWeight(text)} />
+              <Input
+                keyboardType='numeric'
+                value={this.props.inputWeight}
+                onChangeText={(text) => this.props.onChangeSetWeight(text)}
+              />
             </Item>
           </CardItem>
           <CardItem>
             <View style={styles.calculateButton}>
-              <Button primary onPress={() => this.props.onPressCalculate()}>
+              <Button
+                primary
+                onPress={() => this.props.onPressCalculate()}
+              >
                 <Text>Calculate!</Text>
               </Button>
             </View>
