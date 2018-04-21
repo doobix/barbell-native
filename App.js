@@ -1,4 +1,5 @@
 import React from 'react';
+import { AsyncStorage } from 'react-native';
 import { Body, Button, Container, Content, Footer, FooterTab, Header, Icon, Title, Text } from 'native-base';
 import MainView from './MainView';
 import SettingsView from './SettingsView';
@@ -15,6 +16,8 @@ const DEFAULT_WEIGHT_MAP = {
   5: true,
   2.5: true,
 };
+const LAST_INPUT_WEIGHT = 'lastInputWeight';
+const LAST_WEIGHT_MAP = 'lastWeightMap';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -34,6 +37,20 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
+    AsyncStorage.multiGet([LAST_INPUT_WEIGHT, LAST_WEIGHT_MAP], (err, stores) => {
+      let lastState = {};
+      stores.map((result, i, store) => {
+        let key = store[i][0];
+        let value = store[i][1];
+        if (!!value && key === LAST_INPUT_WEIGHT) {
+          lastState.inputWeight = value;
+        }
+        if (!!value && key === LAST_WEIGHT_MAP) {
+          lastState.weightMap = JSON.parse(value);
+        }
+      });
+      this.setState(lastState);
+    });
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
@@ -97,17 +114,6 @@ export default class App extends React.Component {
     );
   }
 
-  toggleWeightCheckbox = (weight) => {
-    const weightMap = {
-      ...this.state.weightMap,
-      [weight]: !this.state.weightMap[weight],
-    }
-    this.setState({
-      ...this.state,
-      weightMap,
-    });
-  }
-
   onChangeSetWeight = (inputWeight) => {
     this.setState({ inputWeight });
   }
@@ -144,6 +150,21 @@ export default class App extends React.Component {
       calculatedWeights,
       calculatedWeight: this.state.inputWeight - (oneSideWeights * 2),
       leftoverWeight: oneSideWeights * 2,
+    });
+
+    AsyncStorage.setItem(LAST_INPUT_WEIGHT, this.state.inputWeight);
+  }
+
+  toggleWeightCheckbox = (weight) => {
+    const weightMap = {
+      ...this.state.weightMap,
+      [weight]: !this.state.weightMap[weight],
+    }
+    this.setState({
+      ...this.state,
+      weightMap,
+    }, () => {
+      AsyncStorage.setItem(LAST_WEIGHT_MAP, JSON.stringify(this.state.weightMap));
     });
   }
 }
