@@ -3,6 +3,8 @@ import { Body, Button, Container, Content, Footer, FooterTab, Header, Icon, Titl
 import MainView from './MainView';
 import SettingsView from './SettingsView';
 
+console.disableYellowBox = true;
+
 const DEFAULT_WEIGHT = '310';
 const DEFAULT_WEIGHT_MAP = {
   55: false,
