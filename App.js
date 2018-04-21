@@ -106,7 +106,7 @@ export default class App extends React.Component {
     });
   }
 
-  onChangeSetWeight(inputWeight) {
+  onChangeSetWeight = (inputWeight) => {
     this.setState({ inputWeight });
   }
 
