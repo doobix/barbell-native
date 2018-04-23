@@ -171,6 +171,7 @@ export default class App extends React.Component {
       weightMap,
     }, () => {
       AsyncStorage.setItem(LAST_WEIGHT_MAP, JSON.stringify(this.state.weightMap));
+      this.calculateWeights();
     });
   }
 }
