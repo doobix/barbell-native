@@ -2433,6 +2433,10 @@ event-target-shim@^1.0.5:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-1.1.1.tgz#a86e5ee6bdaa16054475da797ccddf0c55698491"
 
+eventemitter3@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-2.0.3.tgz#b5e1079b59fb5e1ba2771c0a993be060a58c99ba"
+
 eventemitter3@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.0.1.tgz#4ce66c3fc5b5a6b9f2245e359e1938f1ab10f960"
@@ -5420,6 +5424,12 @@ react-native-easy-grid@0.1.17:
   resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.1.17.tgz#fad8cb371d465828c1c71daa4d8b513d33253452"
   dependencies:
     lodash "^4.11.1"
+
+react-native-fbads@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-fbads/-/react-native-fbads-4.2.2.tgz#d07ecd7dfa0b57b9a679ced35f6571a645ccc618"
+  dependencies:
+    eventemitter3 "^2.0.2"
 
 react-native-gesture-handler@1.0.0-alpha.41:
   version "1.0.0-alpha.41"

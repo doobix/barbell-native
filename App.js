@@ -1,5 +1,6 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, View } from 'react-native';
+import { BannerView } from 'react-native-fbads';
 import { Body, Button, Container, Content, Footer, FooterTab, Header, Icon, Title, Text } from 'native-base';
 import MainView from './MainView';
 import SettingsView from './SettingsView';
@@ -18,6 +19,8 @@ const DEFAULT_WEIGHT_MAP = {
 };
 const LAST_INPUT_WEIGHT = 'lastInputWeight';
 const LAST_WEIGHT_MAP = 'lastWeightMap';
+
+const FB_PLACEMENT_ID = '240858369816202_240858553149517';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -68,6 +71,9 @@ export default class App extends React.Component {
         <Content padder>
           {this.renderView()}
         </Content>
+        <View style={{ marginBottom: 20 }}>
+          <BannerView placementId={FB_PLACEMENT_ID} />
+        </View>
         <Footer>
           <FooterTab>
             <Button
