@@ -1,6 +1,7 @@
 import React from 'react';
 import { AsyncStorage } from 'react-native';
-import { Body, Button, Container, Content, Footer, FooterTab, Header, Icon, Title, Text } from 'native-base';
+import { Body, Container, Content, Footer, FooterTab, Header, Title } from 'native-base';
+import FooterButton from './FooterButton';
 import MainView from './MainView';
 import SettingsView from './SettingsView';
 
@@ -70,24 +71,19 @@ export default class App extends React.Component {
         </Content>
         <Footer>
           <FooterTab>
-            {this.renderButton('Plates')}
-            {this.renderButton('Settings')}
+            <FooterButton
+              currentView={this.state.currentView}
+              onPress={this.onPressChangeView}
+              word='Plates'
+            />
+            <FooterButton
+              currentView={this.state.currentView}
+              onPress={this.onPressChangeView}
+              word='Settings'
+            />
           </FooterTab>
         </Footer>
       </Container>
-    );
-  }
-
-  renderButton = (word) => {
-    return (
-      <Button
-        vertical
-        active={this.state.currentView === word.toLowerCase()}
-        onPress={() => this.onPressChangeView(word.toLowerCase())}
-      >
-        {this.wordToIcon(word)}
-        <Text>{word}</Text>
-      </Button>
     );
   }
 
@@ -113,15 +109,6 @@ export default class App extends React.Component {
     );
   }
 
-  wordToIcon = (word) => {
-    word = word.toLowerCase();
-    if (word === 'plates') {
-      return <Icon type='MaterialIcons' name={'fitness-center'} />;
-    } else if (word === 'settings') {
-      return <Icon type='MaterialCommunityIcons' name={'settings'} />;
-    }
-  }
-
   onChangeSetWeight = (inputWeight) => {
     this.setState({ inputWeight });
   }
@@ -130,7 +117,7 @@ export default class App extends React.Component {
     this.calculateWeights();
   }
 
-  onPressChangeView(currentView) {
+  onPressChangeView = (currentView) => {
     this.setState({ currentView });
   }
 
