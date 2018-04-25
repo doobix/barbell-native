@@ -32,7 +32,7 @@ export default class App extends React.Component {
       calculatedWeight: 0,
       leftoverWeight: 0,
       hasCalculatedWeights: false,
-      currentView: 'calculator',
+      currentView: 'plates',
     };
   }
 
@@ -70,25 +70,24 @@ export default class App extends React.Component {
         </Content>
         <Footer>
           <FooterTab>
-            <Button
-              vertical
-              active={this.state.currentView === 'calculator'}
-              onPress={() => this.onPressChangeView('calculator')}
-            >
-              <Icon name="calculator" />
-              <Text>Calculator</Text>
-            </Button>
-            <Button
-              vertical
-              active={this.state.currentView === 'settings'}
-              onPress={() => this.onPressChangeView('settings')}
-            >
-              <Icon name="settings" />
-              <Text>Settings</Text>
-            </Button>
+            {this.renderButton('Plates')}
+            {this.renderButton('Settings')}
           </FooterTab>
         </Footer>
       </Container>
+    );
+  }
+
+  renderButton = (word) => {
+    return (
+      <Button
+        vertical
+        active={this.state.currentView === word.toLowerCase()}
+        onPress={() => this.onPressChangeView(word.toLowerCase())}
+      >
+        {this.wordToIcon(word)}
+        <Text>{word}</Text>
+      </Button>
     );
   }
 
@@ -112,6 +111,15 @@ export default class App extends React.Component {
         onPressCalculate={this.onPressCalculate}
       />
     );
+  }
+
+  wordToIcon = (word) => {
+    word = word.toLowerCase();
+    if (word === 'plates') {
+      return <Icon type='MaterialIcons' name={'fitness-center'} />;
+    } else if (word === 'settings') {
+      return <Icon type='MaterialCommunityIcons' name={'settings'} />;
+    }
   }
 
   onChangeSetWeight = (inputWeight) => {
