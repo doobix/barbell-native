@@ -79,6 +79,11 @@ export default class App extends React.Component {
             <FooterButton
               currentView={this.state.currentView}
               onPress={this.onPressChangeView}
+              word='Percentage'
+            />
+            <FooterButton
+              currentView={this.state.currentView}
+              onPress={this.onPressChangeView}
               word='Settings'
             />
           </FooterTab>
