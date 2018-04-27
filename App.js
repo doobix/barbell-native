@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { Body, Container, Content, Footer, FooterTab, Header, Title } from 'native-base';
 import FooterButton from './FooterButton';
 import MainView from './MainView';
+import PercentageView from './PercentageView';
 import SettingsView from './SettingsView';
 
 console.disableYellowBox = true;
@@ -19,6 +20,10 @@ const DEFAULT_WEIGHT_MAP = {
 };
 const LAST_INPUT_WEIGHT = 'lastInputWeight';
 const LAST_WEIGHT_MAP = 'lastWeightMap';
+const PERCENTAGES = [
+  0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50,
+  0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05
+];
 
 export default class App extends React.Component {
   constructor(props) {
@@ -32,8 +37,9 @@ export default class App extends React.Component {
       calculatedWeights: [],
       calculatedWeight: 0,
       leftoverWeight: 0,
-      hasCalculatedWeights: false,
       currentView: 'plates',
+      inputOneRepMaxWeight: DEFAULT_WEIGHT,
+      calculatedOneRepMaxWeights: [],
     };
   }
 
@@ -101,7 +107,16 @@ export default class App extends React.Component {
           weightMap={this.state.weightMap}
         />
       );
-    } 
+    } else if (this.state.currentView === 'percentage') {
+      return (
+        <PercentageView
+          calculatedOneRepMaxWeights={this.state.calculatedOneRepMaxWeights}
+          inputOneRepMaxWeight={this.state.inputOneRepMaxWeight}
+          onChangeSetOneRepMaxWeight={this.onChangeSetOneRepMaxWeight}
+          onPressCalculate={this.onPressCalculate}
+        />
+      );
+    }
     return (
       <MainView
         calculatedWeights={this.state.calculatedWeights}
@@ -114,16 +129,37 @@ export default class App extends React.Component {
     );
   }
 
+  onChangeSetOneRepMaxWeight = (inputOneRepMaxWeight) => {
+    this.setState({ inputOneRepMaxWeight });
+  }
+
   onChangeSetWeight = (inputWeight) => {
     this.setState({ inputWeight });
   }
 
-  onPressCalculate = () => {
-    this.calculateWeights();
+  onPressCalculate = (type) => {
+    if (type === 'percentage') {
+      this.calculatePercentage();
+    } else {
+      this.calculateWeights();
+    }
   }
 
   onPressChangeView = (currentView) => {
     this.setState({ currentView });
+  }
+
+  calculatePercentage () {
+    const weightPercentages = [];
+    PERCENTAGES.forEach((percentage) => {
+      weightPercentages.push({
+        percentage,
+        weight: this.state.inputOneRepMaxWeight * percentage,
+      });
+    });
+    this.setState({
+      calculatedOneRepMaxWeights: weightPercentages,
+    });
   }
 
   calculateWeights() {
