@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, CardItem, Input, Item, Label, Text } from 'native-base';
 import { StyleSheet, View } from 'react-native';
-import WeightResults from './WeightResults';
+import PercentageResults from './PercentageResults';
 
 export default class PercentageView extends React.Component {
   render() {
@@ -25,18 +25,16 @@ export default class PercentageView extends React.Component {
                 primary
                 onPress={() => this.props.onPressCalculate('percentage')}
               >
-                <Text>Calculate Percentages!</Text>
+                <Text>Calculate Percentages</Text>
               </Button>
             </View>
           </CardItem>
         </Card>,
         <View>
         </View>
-        {/* <WeightResults
-          calculatedWeights={this.props.calculatedWeights}
-          calculatedWeight={this.props.calculatedWeight}
-          leftoverWeight={this.props.leftoverWeight}
-        /> */}
+        <PercentageResults
+          calculatedOneRepMaxWeights={this.props.calculatedOneRepMaxWeights}
+        />
       </View>
     );
   }
