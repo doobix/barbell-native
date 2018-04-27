@@ -152,9 +152,14 @@ export default class App extends React.Component {
   calculatePercentage () {
     const weightPercentages = [];
     PERCENTAGES.forEach((percentage) => {
+      let weight = Math.round(this.state.inputOneRepMaxWeight * percentage);
+      const weightRemainder = weight % 5;
+      if (weightRemainder) {
+        weight = weight + (5 - weightRemainder);
+      }
       weightPercentages.push({
-        percentage,
-        weight: this.state.inputOneRepMaxWeight * percentage,
+        percentage: `${(percentage * 100).toFixed(0)}%`,
+        weight,
       });
     });
     this.setState({
