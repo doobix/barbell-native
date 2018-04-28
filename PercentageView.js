@@ -5,7 +5,6 @@ import PercentageResults from './PercentageResults';
 
 export default class PercentageView extends React.Component {
   render() {
-    console.log(this.props.calculatedOneRepMaxWeights)
     return (
       <View>
         <Card>
