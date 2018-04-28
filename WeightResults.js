@@ -23,7 +23,7 @@ export default class WeightResults extends React.Component {
     let weightElements = [];
     this.props.calculatedWeights.forEach((weightObj) => {
       weightElements.push(
-        <CardItem key={`results-${weightObj.weight}`}>
+        <CardItem key={`results-${weightObj.weight}`} bordered>
           <Text>
             {weightObj.count} x {weightObj.weight} lbs
           </Text>
