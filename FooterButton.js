@@ -22,7 +22,7 @@ export default class FooterButton extends React.Component {
       return <Icon type='MaterialIcons' name={'fitness-center'} />;
     } else if (word === 'settings') {
       return <Icon type='MaterialCommunityIcons' name={'settings'} />;
-    } else if (word === 'percentage') {
+    } else if (word === 'percentages') {
       return <Icon type='MaterialCommunityIcons' name={'percent'} />;
     }
   }

@@ -24,7 +24,7 @@ export default class MainView extends React.Component {
                 primary
                 onPress={() => this.props.onPressCalculate()}
               >
-                <Text>Calculate!</Text>
+                <Text>Calculate Plates</Text>
               </Button>
             </View>
           </CardItem>
