@@ -28,7 +28,7 @@ export default class PercentageView extends React.Component {
               </Button>
             </View>
           </CardItem>
-        </Card>,
+        </Card>
         <View>
         </View>
         <PercentageResults

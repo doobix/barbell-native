@@ -1,3 +1,4 @@
+import * as Expo from "expo";
 import React from 'react';
 import { AsyncStorage } from 'react-native';
 import { Body, Container, Content, Footer, FooterTab, Header, Title } from 'native-base';
@@ -32,6 +33,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      isFontLoaded: false,
       weights: [55, 45, 35, 25, 10, 5, 2.5],
       weightMap: DEFAULT_WEIGHT_MAP,
       barbellWeight: 45,
@@ -47,7 +49,15 @@ export default class App extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+    this.setState({ isFontLoaded: true });
+  }
+
+  componentDidMount() {
     AsyncStorage.multiGet([LAST_INPUT_WEIGHT, LAST_WEIGHT_MAP, LAST_MAX_WEIGHT], (err, stores) => {
       let lastState = {};
       stores.map((result, i, store) => {
@@ -65,13 +75,15 @@ export default class App extends React.Component {
       });
       this.setState(lastState);
     });
-    await Expo.Font.loadAsync({
-      'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-    });
   }
 
   render() {
+    if (!this.state.isFontLoaded) {
+      return (
+        <Expo.AppLoading />
+      );
+    }
+
     return (
       <Container>
         <Header>

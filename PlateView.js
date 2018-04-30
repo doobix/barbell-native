@@ -28,7 +28,7 @@ export default class PlateView extends React.Component {
               </Button>
             </View>
           </CardItem>
-        </Card>,
+        </Card>
         <PlateResults
           calculatedWeights={this.props.calculatedWeights}
           calculatedWeight={this.props.calculatedWeight}
