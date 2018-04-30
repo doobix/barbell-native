@@ -33,6 +33,7 @@ export default class MainView extends React.Component {
           calculatedWeights={this.props.calculatedWeights}
           calculatedWeight={this.props.calculatedWeight}
           leftoverWeight={this.props.leftoverWeight}
+          isWeightsCalculated={this.props.isWeightsCalculated}
         />
       </View>
     );

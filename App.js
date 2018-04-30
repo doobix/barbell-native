@@ -8,6 +8,7 @@ import SettingsView from './SettingsView';
 
 console.disableYellowBox = true;
 
+const DEFAULT_MAX_WEIGHT = '315';
 const DEFAULT_WEIGHT = '310';
 const DEFAULT_WEIGHT_MAP = {
   55: false,
@@ -39,8 +40,10 @@ export default class App extends React.Component {
       calculatedWeight: 0,
       leftoverWeight: 0,
       currentView: 'plates',
-      inputOneRepMaxWeight: DEFAULT_WEIGHT,
+      inputOneRepMaxWeight: DEFAULT_MAX_WEIGHT,
       calculatedOneRepMaxWeights: [],
+      isPlatesCalculated: false,
+      isPercentagesCalculated: false,
     };
   }
 
@@ -57,7 +60,7 @@ export default class App extends React.Component {
           lastState.weightMap = JSON.parse(value);
         }
         if (!!value && key === LAST_MAX_WEIGHT) {
-          lastState.inputOneRepMaxWeight = JSON.parse(value);
+          lastState.inputOneRepMaxWeight = value;
         }
       });
       this.setState(lastState);
@@ -118,6 +121,7 @@ export default class App extends React.Component {
           inputOneRepMaxWeight={this.state.inputOneRepMaxWeight}
           onChangeSetOneRepMaxWeight={this.onChangeSetOneRepMaxWeight}
           onPressCalculate={this.onPressCalculate}
+          isPercentagesCalculated={this.state.isPercentagesCalculated}
         />
       );
     }
@@ -129,7 +133,8 @@ export default class App extends React.Component {
         leftoverWeight={this.state.leftoverWeight}
         onChangeSetWeight={this.onChangeSetWeight}
         onPressCalculate={this.onPressCalculate}
-      />
+        isWeightsCalculated={this.state.isWeightsCalculated}
+        />
     );
   }
 
@@ -169,6 +174,7 @@ export default class App extends React.Component {
 
     this.setState({
       calculatedOneRepMaxWeights: weightPercentages,
+      isPercentagesCalculated: true,
     });
 
     AsyncStorage.setItem(LAST_MAX_WEIGHT, this.state.inputOneRepMaxWeight);
@@ -198,6 +204,7 @@ export default class App extends React.Component {
       calculatedWeights,
       calculatedWeight: this.state.inputWeight - (oneSideWeights * 2),
       leftoverWeight: oneSideWeights * 2,
+      isWeightsCalculated: true,
     });
 
     AsyncStorage.setItem(LAST_INPUT_WEIGHT, this.state.inputWeight);

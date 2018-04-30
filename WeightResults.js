@@ -8,6 +8,10 @@ export const ADD_WEIGHT_MESSAGE = 'Weights per side:'
 
 export default class WeightResults extends React.Component {
   render() {
+    if (!this.props.isWeightsCalculated) {
+      return null;
+    }
+
     if (this.props.calculatedWeights.length === 0) {
       return (
         <Card>

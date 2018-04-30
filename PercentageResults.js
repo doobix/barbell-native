@@ -7,7 +7,14 @@ export const MAX_PERCENTAGES_MESSAGE = 'Max percentages:'
 
 export default class PercentageResults extends React.Component {
   render() {
-    if (this.props.calculatedOneRepMaxWeights.length === 0) {
+    if (!this.props.isPercentagesCalculated) {
+      return null;
+    }
+
+    if (
+      this.props.calculatedOneRepMaxWeights.length === 0
+      || !this.props.calculatedOneRepMaxWeights.filter((percentage) => percentage.weight).length
+    ) {
       return (
         <Card>
           <CardItem>
