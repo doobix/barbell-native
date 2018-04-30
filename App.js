@@ -2,7 +2,7 @@ import React from 'react';
 import { AsyncStorage } from 'react-native';
 import { Body, Container, Content, Footer, FooterTab, Header, Title } from 'native-base';
 import FooterButton from './FooterButton';
-import MainView from './MainView';
+import PlateView from './PlateView';
 import PercentageView from './PercentageView';
 import SettingsView from './SettingsView';
 
@@ -126,7 +126,7 @@ export default class App extends React.Component {
       );
     }
     return (
-      <MainView
+      <PlateView
         calculatedWeights={this.state.calculatedWeights}
         calculatedWeight={this.state.calculatedWeight}
         inputWeight={this.state.inputWeight}

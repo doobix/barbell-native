@@ -6,7 +6,7 @@ export const NO_WEIGHT_MESSAGE = 'Please add a valid target barbell weight and p
 export const LEFTOVER_WEIGHT_MESSAGE = 'Notice: No weights available to add {leftoverWeight} lbs. Calculating {calculatedWeight} lbs instead.';
 export const ADD_WEIGHT_MESSAGE = 'Weights per side:'
 
-export default class WeightResults extends React.Component {
+export default class PlateResults extends React.Component {
   render() {
     if (!this.props.isWeightsCalculated) {
       return null;

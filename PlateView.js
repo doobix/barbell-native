@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Card, CardItem, Input, Item, Label, Text } from 'native-base';
 import { StyleSheet, View } from 'react-native';
-import WeightResults from './WeightResults';
+import PlateResults from './PlateResults';
 
-export default class MainView extends React.Component {
+export default class PlateView extends React.Component {
   render() {
     return (
       <View>
@@ -29,7 +29,7 @@ export default class MainView extends React.Component {
             </View>
           </CardItem>
         </Card>,
-        <WeightResults
+        <PlateResults
           calculatedWeights={this.props.calculatedWeights}
           calculatedWeight={this.props.calculatedWeight}
           leftoverWeight={this.props.leftoverWeight}
