@@ -17,3 +17,7 @@ Use `yarn run android` to start the app in the Android emulator.
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 For the full Create React Native App README, click [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
+
+## License
+
+[MIT](/LICENSE)
