@@ -22,7 +22,7 @@ export default class PercentageView extends React.Component {
             <View style={styles.calculateButton}>
               <Button
                 primary
-                onPress={() => this.props.onPressCalculate('percentage')}
+                onPress={() => this.props.onPressCalculate('percents')}
               >
                 <Text>Calculate Percentages</Text>
               </Button>

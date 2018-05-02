@@ -104,7 +104,7 @@ export default class App extends React.Component {
             <FooterButton
               currentView={this.state.currentView}
               onPress={this.onPressChangeView}
-              word='Percentages'
+              word='Percents'
             />
             <FooterButton
               currentView={this.state.currentView}
@@ -126,7 +126,7 @@ export default class App extends React.Component {
           weightMap={this.state.weightMap}
         />
       );
-    } else if (this.state.currentView === 'percentages') {
+    } else if (this.state.currentView === 'percents') {
       return (
         <PercentageView
           calculatedOneRepMaxWeights={this.state.calculatedOneRepMaxWeights}
@@ -159,7 +159,7 @@ export default class App extends React.Component {
   }
 
   onPressCalculate = (type) => {
-    if (type === 'percentage') {
+    if (type === 'percents') {
       this.calculatePercentage();
     } else {
       this.calculateWeights();
