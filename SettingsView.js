@@ -1,6 +1,6 @@
 import React from 'react';
-import { Body, Card, CardItem, CheckBox, ListItem, Text } from 'native-base';
-import { StyleSheet, View } from 'react-native';
+import { Body, Card, CardItem, CheckBox, Icon, ListItem, Text } from 'native-base';
+import { Linking, StyleSheet, View } from 'react-native';
 
 export default class WeightResults extends React.Component {
   render() {
@@ -12,6 +12,9 @@ export default class WeightResults extends React.Component {
           </CardItem>
           {this.renderWeightCheckboxes()}
         </Card>
+        <View style={styles.github}>
+          <Text onPress={this.onPressGitHub}><Icon name="logo-github" /></Text>
+        </View>
       </View>
     );
   }
@@ -33,10 +36,15 @@ export default class WeightResults extends React.Component {
     });
     return weightCheckboxes;
   }
+
+  onPressGitHub() {
+    Linking.openURL('https://www.github.com/doobix/barbell-native');
+  }
 }
 
 const styles = StyleSheet.create({
-  notice: {
-    color: 'green',
+  github: {
+    alignSelf: 'center',
+    paddingTop: 10,
   },
 });
