@@ -2,10 +2,10 @@ import * as Expo from "expo";
 import React from 'react';
 import { AsyncStorage } from 'react-native';
 import { Body, Container, Content, Footer, FooterTab, Header, Title } from 'native-base';
-import FooterButton from './FooterButton';
-import PlateView from './PlateView';
-import PercentageView from './PercentageView';
-import SettingsView from './SettingsView';
+import FooterButton from './src/FooterButton';
+import PlateView from './src/PlateView';
+import PercentageView from './src/PercentageView';
+import SettingsView from './src/SettingsView';
 
 console.disableYellowBox = true;
 
