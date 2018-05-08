@@ -17,6 +17,7 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
     "transformIgnorePatterns": [
       "node_modules/(?!expo|react-native|native-base-shoutem-theme)"
     ]
