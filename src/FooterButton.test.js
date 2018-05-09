@@ -1,7 +1,7 @@
 import React from 'react';
 import FooterButton from './FooterButton';
-import { mount, shallow } from 'enzyme';
-import { Button, Icon } from 'native-base';
+import { shallow } from 'enzyme';
+import { Button } from 'native-base';
 
 const defaultPropsGenerator = (overrides) => ({
   word: 'Plates',
