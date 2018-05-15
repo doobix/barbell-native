@@ -10,7 +10,8 @@
     },
     "android": {
       "package": "com.seewes.barbell",
-      "permissions": []
+      "permissions": [],
+      "versionCode": 1
     }
   }
 }
