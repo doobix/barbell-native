@@ -9,7 +9,8 @@
       "bundleIdentifier": "com.seewes.barbell"
     },
     "android": {
-      "package": "com.seewes.barbell"
+      "package": "com.seewes.barbell",
+      "permissions": []
     }
   }
 }
