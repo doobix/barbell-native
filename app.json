@@ -1,6 +1,15 @@
 {
   "expo": {
+    "name": "Barbell Weight Calculator",
+    "version": "1.0.0",
+    "slug": "barbell-weight-calculator",
     "sdkVersion": "26.0.0",
-    "androidStatusBarColor": "#000000"
+    "androidStatusBarColor": "#000000",
+    "ios": {
+      "bundleIdentifier": "com.seewes.barbell"
+    },
+    "android": {
+      "package": "com.seewes.barbell"
+    }
   }
 }
