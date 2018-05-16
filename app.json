@@ -12,7 +12,7 @@
     "android": {
       "package": "com.seewes.barbell",
       "permissions": [],
-      "versionCode": 1
+      "versionCode": 2
     }
   }
 }
