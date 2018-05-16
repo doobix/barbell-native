@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Barbell Weight Calculator",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "slug": "barbell-weight-calculator",
     "sdkVersion": "26.0.0",
     "icon": "./assets/app-icon.png",
