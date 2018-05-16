@@ -1,6 +1,6 @@
 import * as Expo from "expo";
 import React from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Keyboard } from 'react-native';
 import { Body, Container, Content, Footer, FooterTab, Header, Title } from 'native-base';
 import FooterButton from './src/FooterButton';
 import PlateView from './src/PlateView';
@@ -159,6 +159,8 @@ export default class App extends React.Component {
   }
 
   onPressCalculate = (type) => {
+    Keyboard.dismiss();
+
     if (type === 'percents') {
       this.calculatePercentage();
     } else {
