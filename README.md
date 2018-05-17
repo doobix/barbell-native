@@ -2,6 +2,10 @@
 
 A mobile app for calculating plates to add to your barbell, made with react-native!
 
+## Download
+
+Get this app from the [Google Play Store](https://play.google.com/store/apps/details?id=com.seewes.barbell)!
+
 ## Demo
 
 ![Barbell Weight Calculator Native](https://raw.githubusercontent.com/doobix/barbell-native/master/screenshots/demo.gif)
