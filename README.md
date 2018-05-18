@@ -22,6 +22,12 @@ This project was bootstrapped with [Create React Native App](https://github.com/
 
 For the full Create React Native App README, click [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
 
+## Build
+
+Use `exp build:android` to build an `.apk` file.
+
+Use `exp build:ios` to build an `.ipa` file.
+
 ## License
 
 [MIT](/LICENSE)
