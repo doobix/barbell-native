@@ -32,8 +32,8 @@ export default class PlateView extends React.Component {
         <PlateResults
           calculatedWeights={this.props.calculatedWeights}
           calculatedWeight={this.props.calculatedWeight}
-          leftoverWeight={this.props.leftoverWeight}
           isWeightsCalculated={this.props.isWeightsCalculated}
+          leftoverWeight={this.props.leftoverWeight}
         />
       </View>
     );
