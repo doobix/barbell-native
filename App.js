@@ -9,8 +9,10 @@ import SettingsView from './src/SettingsView';
 
 console.disableYellowBox = true;
 
+const DEFAULT_BARBELL_WEIGHT = 45;
 const DEFAULT_MAX_WEIGHT = '315';
 const DEFAULT_WEIGHT = '310';
+const DEFAULT_WEIGHTS = [55, 45, 35, 25, 10, 5, 2.5]
 const DEFAULT_WEIGHT_MAP = {
   55: false,
   45: true,
@@ -34,9 +36,9 @@ export default class App extends React.Component {
 
     this.state = {
       isFontLoaded: false,
-      weights: [55, 45, 35, 25, 10, 5, 2.5],
+      weights: DEFAULT_WEIGHTS,
       weightMap: DEFAULT_WEIGHT_MAP,
-      barbellWeight: 45,
+      barbellWeight: DEFAULT_BARBELL_WEIGHT,
       inputWeight: DEFAULT_WEIGHT,
       calculatedWeights: [],
       calculatedWeight: 0,
