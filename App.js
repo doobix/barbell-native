@@ -3,8 +3,8 @@ import React from 'react';
 import { AsyncStorage, Keyboard } from 'react-native';
 import { Body, Container, Content, Footer, FooterTab, Header, Title } from 'native-base';
 import FooterButton from './src/FooterButton';
-import PlateView from './src/PlateView';
 import PercentageView from './src/PercentageView';
+import PlateView from './src/PlateView';
 import SettingsView from './src/SettingsView';
 
 console.disableYellowBox = true;
