@@ -9,7 +9,7 @@ import SettingsView from './src/SettingsView';
 
 console.disableYellowBox = true;
 
-const DEFAULT_BARBELL_WEIGHT = 45;
+const DEFAULT_BARBELL_WEIGHT = '45';
 const DEFAULT_MAX_WEIGHT = '315';
 const DEFAULT_WEIGHT = '310';
 const DEFAULT_WEIGHTS = [55, 45, 35, 25, 10, 5, 2.5]
@@ -123,6 +123,8 @@ export default class App extends React.Component {
     if (this.state.currentView === 'settings') {
       return (
         <SettingsView
+          barbellWeight={this.state.barbellWeight}
+          setBarbellWeight={this.setBarbellWeight}
           toggleWeightCheckbox={this.toggleWeightCheckbox}
           weights={this.state.weights}
           weightMap={this.state.weightMap}
@@ -174,7 +176,7 @@ export default class App extends React.Component {
     this.setState({ currentView });
   }
 
-  calculatePercentage () {
+  calculatePercentage() {
     const weightPercentages = [];
     PERCENTAGES.forEach((percentage) => {
       let weight = Math.round(this.state.inputOneRepMaxWeight * percentage);
@@ -236,6 +238,12 @@ export default class App extends React.Component {
       weightMap,
     }, () => {
       AsyncStorage.setItem(LAST_WEIGHT_MAP, JSON.stringify(this.state.weightMap));
+      this.calculateWeights();
+    });
+  }
+
+  setBarbellWeight = (barbellWeight) => {
+    this.setState({ barbellWeight }, () => {
       this.calculateWeights();
     });
   }

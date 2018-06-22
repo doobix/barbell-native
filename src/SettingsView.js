@@ -1,5 +1,5 @@
 import React from 'react';
-import { Body, Card, CardItem, CheckBox, Icon, ListItem, Text } from 'native-base';
+import { Body, Card, CardItem, CheckBox, Icon, Input, Item, Label, ListItem, Text } from 'native-base';
 import { Linking, StyleSheet, View } from 'react-native';
 
 export default class WeightResults extends React.Component {
@@ -7,11 +7,25 @@ export default class WeightResults extends React.Component {
     return (
       <View>
         <Card>
+          <CardItem>
+            <Item floatingLabel>
+              <Label>Default Barbell Weight</Label>
+              <Input
+                keyboardType='numeric'
+                value={this.props.barbellWeight}
+                onChangeText={(text) => this.props.setBarbellWeight(text)}
+              />
+            </Item>
+          </CardItem>
+        </Card>
+
+        <Card>
           <CardItem header bordered>
             <Text>Available Weights</Text>
           </CardItem>
           {this.renderWeightCheckboxes()}
         </Card>
+
         <View style={styles.github}>
           <Text onPress={this.onPressGitHub}><Icon name="logo-github" /></Text>
         </View>
