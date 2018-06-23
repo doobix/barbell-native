@@ -22,9 +22,10 @@ const DEFAULT_WEIGHT_MAP = {
   5: true,
   2.5: true,
 };
+const LAST_BARBELL_WEIGHT = 'lastBarbellWeight';
 const LAST_INPUT_WEIGHT = 'lastInputWeight';
-const LAST_WEIGHT_MAP = 'lastWeightMap';
 const LAST_MAX_WEIGHT = 'lastMaxWeight';
+const LAST_WEIGHT_MAP = 'lastWeightMap';
 const PERCENTAGES = [
   0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50,
   0.45, 0.40, 0.35, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05
@@ -60,19 +61,27 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    AsyncStorage.multiGet([LAST_INPUT_WEIGHT, LAST_WEIGHT_MAP, LAST_MAX_WEIGHT], (err, stores) => {
+    AsyncStorage.multiGet([
+      LAST_BARBELL_WEIGHT,
+      LAST_INPUT_WEIGHT,
+      LAST_MAX_WEIGHT,
+      LAST_WEIGHT_MAP,
+    ], (err, stores) => {
       let lastState = {};
       stores.map((result, i, store) => {
         let key = store[i][0];
         let value = store[i][1];
+        if (!!value && key === LAST_BARBELL_WEIGHT) {
+          lastState.barbellWeight = value;
+        }
         if (!!value && key === LAST_INPUT_WEIGHT) {
           lastState.inputWeight = value;
         }
-        if (!!value && key === LAST_WEIGHT_MAP) {
-          lastState.weightMap = JSON.parse(value);
-        }
         if (!!value && key === LAST_MAX_WEIGHT) {
           lastState.inputOneRepMaxWeight = value;
+        }
+        if (!!value && key === LAST_WEIGHT_MAP) {
+          lastState.weightMap = JSON.parse(value);
         }
       });
       this.setState(lastState);
@@ -244,6 +253,7 @@ export default class App extends React.Component {
 
   setBarbellWeight = (barbellWeight) => {
     this.setState({ barbellWeight }, () => {
+      AsyncStorage.setItem(LAST_BARBELL_WEIGHT, this.state.barbellWeight);
       this.calculateWeights();
     });
   }
