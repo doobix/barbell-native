@@ -1,9 +1,10 @@
 import React from 'react';
 import SettingsView from './SettingsView';
 import { shallow } from 'enzyme';
-import { CheckBox } from 'native-base';
+import { CheckBox, Input } from 'native-base';
 
 const defaultPropsGenerator = (overrides) => ({
+  onChangeSetBarbellWeight: jest.fn(),
   toggleWeightCheckbox: jest.fn(),
   weights: [55, 45, 35],
   weightMap: {
@@ -33,5 +34,13 @@ describe('SettingsView', () => {
     expect(toggleWeightCheckbox).not.toHaveBeenCalled();
     wrapper.find(CheckBox).at(0).simulate('press');
     expect(toggleWeightCheckbox).toHaveBeenCalledTimes(1);
+  });
+
+  it('invokes onChangeSetBarbellWeight when Input is changed', () => {
+    const onChangeSetBarbellWeight = jest.fn();
+    const wrapper = setup({ onChangeSetBarbellWeight });
+    expect(onChangeSetBarbellWeight).toHaveBeenCalledTimes(0);
+    wrapper.find(Input).simulate('changeText');
+    expect(onChangeSetBarbellWeight).toHaveBeenCalledTimes(1);
   });
 });

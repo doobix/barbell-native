@@ -13,7 +13,7 @@ export default class WeightResults extends React.Component {
               <Input
                 keyboardType='numeric'
                 value={this.props.barbellWeight}
-                onChangeText={(text) => this.props.setBarbellWeight(text)}
+                onChangeText={(text) => this.props.onChangeSetBarbellWeight(text)}
               />
             </Item>
           </CardItem>

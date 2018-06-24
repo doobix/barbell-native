@@ -133,7 +133,7 @@ export default class App extends React.Component {
       return (
         <SettingsView
           barbellWeight={this.state.barbellWeight}
-          setBarbellWeight={this.setBarbellWeight}
+          onChangeSetBarbellWeight={this.setBarbellWeight}
           toggleWeightCheckbox={this.toggleWeightCheckbox}
           weights={this.state.weights}
           weightMap={this.state.weightMap}
