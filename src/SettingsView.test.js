@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import { CheckBox, Input } from 'native-base';
 
 const defaultPropsGenerator = (overrides) => ({
+  barbellWeight: '45',
   onChangeSetBarbellWeight: jest.fn(),
   toggleWeightCheckbox: jest.fn(),
   weights: [55, 45, 35],
