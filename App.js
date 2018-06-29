@@ -143,10 +143,12 @@ export default class App extends React.Component {
       return (
         <PercentageView
           calculatedOneRepMaxWeights={this.state.calculatedOneRepMaxWeights}
+          changeView={this.onPressChangeView}
           inputOneRepMaxWeight={this.state.inputOneRepMaxWeight}
+          isPercentagesCalculated={this.state.isPercentagesCalculated}
           onChangeSetOneRepMaxWeight={this.onChangeSetOneRepMaxWeight}
           onPressCalculate={this.onPressCalculate}
-          isPercentagesCalculated={this.state.isPercentagesCalculated}
+          setWeightAndCalculate={this.setWeightAndCalculate}
         />
       );
     }
@@ -159,7 +161,7 @@ export default class App extends React.Component {
         onChangeSetWeight={this.onChangeSetWeight}
         onPressCalculate={this.onPressCalculate}
         isWeightsCalculated={this.state.isWeightsCalculated}
-        />
+      />
     );
   }
 
@@ -255,6 +257,12 @@ export default class App extends React.Component {
     this.setState({ barbellWeight }, () => {
       AsyncStorage.setItem(LAST_BARBELL_WEIGHT, this.state.barbellWeight);
       this.calculateWeights();
+    });
+  }
+
+  setWeightAndCalculate = (inputWeight) => {
+    this.setState({ inputWeight }, () => {
+      this.onPressCalculate();
     });
   }
 }

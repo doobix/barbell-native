@@ -29,8 +29,17 @@ export default class PercentageResults extends React.Component {
     let percentageElements = [];
     this.props.calculatedOneRepMaxWeights.forEach((percentObj) => {
       const percentage = `@ ${percentObj.percentage} = ${percentObj.weight} lbs`;
+      const setWeightAndChangeView = () => {
+        this.props.setWeightAndCalculate(`${percentObj.weight}`);
+        this.props.changeView('plates');
+      }
       percentageElements.push(
-        <CardItem key={`percent-results-${percentObj.percentage}`} bordered>
+        <CardItem
+          bordered
+          button
+          key={`percent-results-${percentObj.percentage}`}
+          onPress={setWeightAndChangeView}
+        >
           <Text>
             {percentage}
           </Text>

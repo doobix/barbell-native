@@ -33,7 +33,9 @@ export default class PercentageView extends React.Component {
         </View>
         <PercentageResults
           calculatedOneRepMaxWeights={this.props.calculatedOneRepMaxWeights}
+          changeView={this.props.changeView}
           isPercentagesCalculated={this.props.isPercentagesCalculated}
+          setWeightAndCalculate={this.props.setWeightAndCalculate}
         />
       </View>
     );
