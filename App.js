@@ -12,12 +12,13 @@ console.disableYellowBox = true;
 const DEFAULT_BARBELL_WEIGHT = '45';
 const DEFAULT_MAX_WEIGHT = '315';
 const DEFAULT_WEIGHT = '310';
-const DEFAULT_WEIGHTS = [55, 45, 35, 25, 10, 5, 2.5]
+const DEFAULT_WEIGHTS = [55, 45, 35, 25, 15, 10, 5, 2.5]
 const DEFAULT_WEIGHT_MAP = {
   55: false,
   45: true,
   35: false,
   25: true,
+  15: false,
   10: true,
   5: true,
   2.5: true,
