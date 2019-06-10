@@ -29,7 +29,7 @@
     "native-base": "^2.12.1",
     "npm": "^6.0.0",
     "react": "16.5.0",
-    "react-dom": "16",
+    "react-dom": ">=16.0.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-elements": "^1.1.0",
     "react-timer-mixin": "^0.13.4"
