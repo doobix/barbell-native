@@ -27,7 +27,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "expo": "^33.0.0",
     "native-base": "^2.12.1",
-    "npm": "^6.0.0",
+    "npm": "^6.13.4",
     "react": "16.5.0",
     "react-dom": ">=16.0.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
