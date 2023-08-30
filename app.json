@@ -4,7 +4,6 @@
     "version": "1.4.0",
     "slug": "barbell-weight-calculator",
     "icon": "./assets/app-icon.png",
-    "androidStatusBarColor": "#000000",
     "ios": {
       "bundleIdentifier": "com.seewes.barbell"
     },
