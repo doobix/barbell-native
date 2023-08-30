@@ -3,7 +3,6 @@
     "name": "Barbell Weight Calculator",
     "version": "1.4.0",
     "slug": "barbell-weight-calculator",
-    "sdkVersion": "33.0.0",
     "icon": "./assets/app-icon.png",
     "androidStatusBarColor": "#000000",
     "ios": {
