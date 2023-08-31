@@ -1,64 +1,66 @@
-import React from 'react';
-import { Body, Card, CardItem, CheckBox, Icon, Input, Item, Label, ListItem, Text } from 'native-base';
-import { Linking, StyleSheet, View } from 'react-native';
+import { useState} from 'react';
+import { Linking, View } from 'react-native';
+import { Button, Card, Checkbox, Text, TextInput } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class WeightResults extends React.Component {
-  render() {
-    return (
-      <View>
-        <Card>
-          <CardItem>
-            <Item floatingLabel>
-              <Label>Default Barbell Weight</Label>
-              <Input
-                keyboardType='numeric'
-                value={this.props.barbellWeight}
-                onChangeText={(text) => this.props.onChangeSetBarbellWeight(text)}
-              />
-            </Item>
-          </CardItem>
-        </Card>
+export default WeightResults = (props) => {
+  const [defaultWeight, setDefaultWeight] = useState(props.barbellWeight);
 
-        <Card>
-          <CardItem header bordered>
-            <Text>Available Weights</Text>
-          </CardItem>
-          {this.renderWeightCheckboxes()}
-        </Card>
-
-        <View style={styles.github}>
-          <Text onPress={this.onPressGitHub}><Icon name="logo-github" /></Text>
-        </View>
-      </View>
-    );
-  }
-
-  renderWeightCheckboxes() {
+  const renderWeightCheckboxes = () => {
     const weightCheckboxes = [];
-    this.props.weights.forEach((weight) => {
+    props.weights.forEach((weight) => {
+      const status = props.weightMap[weight] ? 'checked' : 'unchecked';
       weightCheckboxes.push(
-        <ListItem key={`checkbox-${weight}`}>
-          <CheckBox
-            checked={this.props.weightMap[weight]}
-            onPress={() => this.props.toggleWeightCheckbox(weight)}
+        <Text key={`checkbox-${weight}`}>
+          <Checkbox.Item
+            label={`${weight} lbs`}
+            status={status}
+            onPress={() => props.toggleWeightCheckbox(weight)}
+            position="leading"
           />
-          <Body>
-            <Text>{weight} lbs</Text>
-          </Body>
-        </ListItem>
+        </Text>
       );
     });
     return weightCheckboxes;
   }
 
-  onPressGitHub() {
+  const onPressGitHub = () => {
     Linking.openURL('https://www.github.com/doobix/barbell-native');
   }
-}
 
-const styles = StyleSheet.create({
-  github: {
-    alignSelf: 'center',
-    paddingTop: 10,
-  },
-});
+  return (
+    <>
+      <Card>
+        <Card.Content>
+          <TextInput
+            label="Default Barbell Weight"
+            value={defaultWeight}
+            onChangeText={setDefaultWeight}
+            keyboardType="numeric"
+          />
+        </Card.Content>
+        <Card.Actions>
+          <Button mode="contained" onPress={() => props.onPressSaveDefaultWeight(defaultWeight)}>
+            Save default barbell weight
+          </Button>
+        </Card.Actions>
+      </Card>
+
+      <View style={{ marginTop: 20 }}>
+        <Card>
+          <Card.Title title="Available Weights:" />
+          <Card.Content>
+            {renderWeightCheckboxes()}
+          </Card.Content>
+        </Card>
+      </View>
+
+      <View style={{
+        alignSelf: 'center',
+        marginTop: 20,
+      }}>
+        <Text onPress={onPressGitHub}><Icon name="github" size={30} /></Text>
+      </View>
+    </>
+  );
+}

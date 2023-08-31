@@ -1,50 +1,36 @@
-import React from 'react';
-import { Button, Card, CardItem, Input, Item, Label, Text } from 'native-base';
-import { StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { View } from 'react-native';
+import { Button, Card, TextInput } from 'react-native-paper';
 import PlateResults from './PlateResults';
 
-export default class PlateView extends React.Component {
-  render() {
-    return (
-      <View>
-        <Card>
-          <CardItem>
-            <Item floatingLabel>
-              <Label>Target barbell weight</Label>
-              <Input
-                keyboardType='numeric'
-                value={this.props.inputWeight}
-                onChangeText={(text) => this.props.onChangeSetWeight(text)}
-              />
-            </Item>
-          </CardItem>
-          <CardItem>
-            <View style={styles.calculateButton}>
-              <Button
-                primary
-                onPress={() => this.props.onPressCalculate()}
-              >
-                <Text>Calculate Plates</Text>
-              </Button>
-            </View>
-          </CardItem>
-        </Card>
+export default PlateView = (props) => {
+  const [inputWeight, setInputWeight] = useState(props.inputWeight);
+
+  return (
+    <>
+      <Card>
+        <Card.Content>
+          <TextInput
+            label="Target barbell weight"
+            value={inputWeight}
+            onChangeText={setInputWeight}
+            keyboardType="numeric"
+          />
+        </Card.Content>
+        <Card.Actions>
+          <Button mode="contained" onPress={() => props.onPressCalculate(inputWeight)}>
+            Calculate Plates
+          </Button>
+        </Card.Actions>
+      </Card>
+      <View style={{ marginTop: 20 }}>
         <PlateResults
-          calculatedWeights={this.props.calculatedWeights}
-          calculatedWeight={this.props.calculatedWeight}
-          isWeightsCalculated={this.props.isWeightsCalculated}
-          leftoverWeight={this.props.leftoverWeight}
+          calculatedWeights={props.calculatedWeights}
+          calculatedWeight={props.calculatedWeight}
+          isWeightsCalculated={props.isWeightsCalculated}
+          leftoverWeight={props.leftoverWeight}
         />
       </View>
-    );
-  }
+    </>
+  );
 }
-
-const styles = StyleSheet.create({
-  calculateButton: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

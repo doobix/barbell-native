@@ -1,67 +1,51 @@
-import React from 'react';
-import { Card, CardItem, Text } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { View } from 'react-native';
+import { Card, List, Text } from 'react-native-paper';
 
 export const NO_PERCENTAGE_MESSAGE = 'Please add a valid one rep max weight and press Calculate Percentages.';
 export const MAX_PERCENTAGES_MESSAGE = 'Max percentages:'
 
-export default class PercentageResults extends React.Component {
-  render() {
-    if (!this.props.isPercentagesCalculated) {
-      return null;
-    }
+export default PercentageResults = (props) => {
+  if (!props.isPercentagesCalculated) {
+    return null;
+  }
 
-    if (
-      this.props.calculatedOneRepMaxWeights.length === 0
-      || !this.props.calculatedOneRepMaxWeights.filter((percentage) => percentage.weight).length
-    ) {
-      return (
+  if (
+    props.calculatedOneRepMaxWeights.length === 0
+    || !props.calculatedOneRepMaxWeights.filter((percentage) => percentage.weight).length
+  ) {
+    return (
+      <View style={{ marginBottom: 20 }}>
         <Card>
-          <CardItem>
-            <Text style={styles.notice}>
+          <Card.Content>
+            <Text style={{ color: 'green' }}>
               {NO_PERCENTAGE_MESSAGE}
             </Text>
-          </CardItem>
+          </Card.Content>
         </Card>
-      );
-    }
-
-    let percentageElements = [];
-    this.props.calculatedOneRepMaxWeights.forEach((percentObj) => {
-      const percentage = `@ ${percentObj.percentage} = ${percentObj.weight} lbs`;
-      const setWeightAndChangeView = () => {
-        this.props.setWeightAndCalculate(`${percentObj.weight}`);
-        this.props.changeView('plates');
-      }
-      percentageElements.push(
-        <CardItem
-          bordered
-          button
-          key={`percent-results-${percentObj.percentage}`}
-          onPress={setWeightAndChangeView}
-        >
-          <Text>
-            {percentage}
-          </Text>
-        </CardItem>
-      );
-    });
-
-    return (
-      <React.Fragment>
-        <Card>
-          <CardItem header bordered>
-            <Text>{MAX_PERCENTAGES_MESSAGE}</Text>
-          </CardItem>
-          {percentageElements}
-        </Card>
-      </React.Fragment>
+      </View>
     );
   }
-}
 
-const styles = StyleSheet.create({
-  notice: {
-    color: 'green',
-  },
-});
+  let percentageElements = [];
+  props.calculatedOneRepMaxWeights.forEach((percentObj, idx) => {
+    const percentage = `@ ${percentObj.percentage} = ${percentObj.weight} lbs`;
+    const setWeightAndChangeView = () => {
+      props.setWeightAndCalculate(`${percentObj.weight}`);
+      props.changeView(0); // plates view
+    }
+    percentageElements.push(
+      <List.Item
+        key={idx}
+        onPress={setWeightAndChangeView}
+        title={percentage}
+      />
+    );
+  });
+
+  return (
+    <Card>
+      <Card.Title title={MAX_PERCENTAGES_MESSAGE} />
+      {percentageElements}
+    </Card>
+  );
+}

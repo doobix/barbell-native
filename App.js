@@ -1,8 +1,7 @@
-import * as Expo from "expo";
 import React from 'react';
-import { AsyncStorage, Keyboard } from 'react-native';
-import { Body, Container, Content, Footer, FooterTab, Header, Title } from 'native-base';
-import FooterButton from './src/FooterButton';
+import { Keyboard, ScrollView } from 'react-native';
+import { Appbar, BottomNavigation, PaperProvider } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PercentageView from './src/PercentageView';
 import PlateView from './src/PlateView';
 import SettingsView from './src/SettingsView';
@@ -37,7 +36,6 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      isFontLoaded: false,
       weights: DEFAULT_WEIGHTS,
       weightMap: DEFAULT_WEIGHT_MAP,
       barbellWeight: DEFAULT_BARBELL_WEIGHT,
@@ -45,20 +43,17 @@ export default class App extends React.Component {
       calculatedWeights: [],
       calculatedWeight: 0,
       leftoverWeight: 0,
-      currentView: 'plates',
       inputOneRepMaxWeight: DEFAULT_MAX_WEIGHT,
       calculatedOneRepMaxWeights: [],
       isPlatesCalculated: false,
       isPercentagesCalculated: false,
+      routeIndex: 0,
+      routes: [
+        { key: 'plates', title: 'Plates', focusedIcon: 'dumbbell', unfocusedIcon: 'dumbbell' },
+        { key: 'percentages', title: 'Percentages', focusedIcon: 'percent', unfocusedIcon: 'percent' },
+        { key: 'settings', title: 'Settings', focusedIcon: 'cog', unfocusedIcon: 'cog' },
+      ],
     };
-  }
-
-  async componentWillMount() {
-    await Expo.Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-    });
-    this.setState({ isFontLoaded: true });
   }
 
   componentDidMount() {
@@ -88,81 +83,55 @@ export default class App extends React.Component {
       this.setState(lastState);
     });
   }
-
+    
   render() {
-    if (!this.state.isFontLoaded) {
-      return (
-        <Expo.AppLoading />
-      );
-    }
-
     return (
-      <Container>
-        <Header>
-          <Body>
-            <Title>Barbell Weight Calculator</Title>
-          </Body>
-        </Header>
-        <Content padder>
-          {this.renderView()}
-        </Content>
-        <Footer>
-          <FooterTab>
-            <FooterButton
-              currentView={this.state.currentView}
-              onPress={this.onPressChangeView}
-              word='Plates'
-            />
-            <FooterButton
-              currentView={this.state.currentView}
-              onPress={this.onPressChangeView}
-              word='Percents'
-            />
-            <FooterButton
-              currentView={this.state.currentView}
-              onPress={this.onPressChangeView}
-              word='Settings'
-            />
-          </FooterTab>
-        </Footer>
-      </Container>
-    );
-  }
-
-  renderView() {
-    if (this.state.currentView === 'settings') {
-      return (
-        <SettingsView
-          barbellWeight={this.state.barbellWeight}
-          onChangeSetBarbellWeight={this.setBarbellWeight}
-          toggleWeightCheckbox={this.toggleWeightCheckbox}
-          weights={this.state.weights}
-          weightMap={this.state.weightMap}
+      <PaperProvider>
+        <Appbar.Header mode="center-aligned">
+          <Appbar.Content title="Barbell Weight Calculator" />
+        </Appbar.Header>
+        <BottomNavigation
+          navigationState={{ index: this.state.routeIndex, routes: this.state.routes }}
+          onIndexChange={(routeIndex) => this.setState({routeIndex})}
+          renderScene={BottomNavigation.SceneMap({
+            plates: () => (
+              <ScrollView contentContainerStyle={{ padding: 20}}>
+                <PlateView
+                  calculatedWeights={this.state.calculatedWeights}
+                  calculatedWeight={this.state.calculatedWeight}
+                  inputWeight={this.state.inputWeight}
+                  leftoverWeight={this.state.leftoverWeight}
+                  onPressCalculate={this.onPressCalculateWeights}
+                  isWeightsCalculated={this.state.isWeightsCalculated}
+                />
+              </ScrollView>
+            ),
+            percentages: () => (
+              <ScrollView contentContainerStyle={{ padding: 20}}>
+                <PercentageView
+                  calculatedOneRepMaxWeights={this.state.calculatedOneRepMaxWeights}
+                  changeView={this.onPressChangeView}
+                  inputOneRepMaxWeight={this.state.inputOneRepMaxWeight}
+                  isPercentagesCalculated={this.state.isPercentagesCalculated}
+                  onPressCalculate={this.onPressCalculatePercentages}
+                  setWeightAndCalculate={this.setWeightAndCalculate}
+                />
+              </ScrollView>
+            ),
+            settings: () => (
+              <ScrollView contentContainerStyle={{ padding: 20}}>
+                <SettingsView
+                  barbellWeight={this.state.barbellWeight}
+                  onPressSaveDefaultWeight={this.onPressSaveDefaultWeight}
+                  toggleWeightCheckbox={this.toggleWeightCheckbox}
+                  weights={this.state.weights}
+                  weightMap={this.state.weightMap}
+                />
+              </ScrollView>
+            ),
+          })}
         />
-      );
-    } else if (this.state.currentView === 'percents') {
-      return (
-        <PercentageView
-          calculatedOneRepMaxWeights={this.state.calculatedOneRepMaxWeights}
-          changeView={this.onPressChangeView}
-          inputOneRepMaxWeight={this.state.inputOneRepMaxWeight}
-          isPercentagesCalculated={this.state.isPercentagesCalculated}
-          onChangeSetOneRepMaxWeight={this.onChangeSetOneRepMaxWeight}
-          onPressCalculate={this.onPressCalculate}
-          setWeightAndCalculate={this.setWeightAndCalculate}
-        />
-      );
-    }
-    return (
-      <PlateView
-        calculatedWeights={this.state.calculatedWeights}
-        calculatedWeight={this.state.calculatedWeight}
-        inputWeight={this.state.inputWeight}
-        leftoverWeight={this.state.leftoverWeight}
-        onChangeSetWeight={this.onChangeSetWeight}
-        onPressCalculate={this.onPressCalculate}
-        isWeightsCalculated={this.state.isWeightsCalculated}
-      />
+      </PaperProvider>
     );
   }
 
@@ -174,24 +143,29 @@ export default class App extends React.Component {
     this.setState({ inputWeight });
   }
 
-  onPressCalculate = (type) => {
+  onPressCalculateWeights = (weight) => {
     Keyboard.dismiss();
-
-    if (type === 'percents') {
-      this.calculatePercentage();
-    } else {
-      this.calculateWeights();
-    }
+    this.calculateWeights(weight);
   }
 
-  onPressChangeView = (currentView) => {
-    this.setState({ currentView });
+  onPressCalculatePercentages = (weight) => {
+    Keyboard.dismiss();
+    this.calculatePercentage(weight);
   }
 
-  calculatePercentage() {
+  onPressSaveDefaultWeight = (weight) => {
+    Keyboard.dismiss();
+    this.setBarbellWeight(weight);
+  }
+
+  onPressChangeView = (routeIndex) => {
+    this.setState({ routeIndex });
+  }
+
+  calculatePercentage(inputWeight) {
     const weightPercentages = [];
     PERCENTAGES.forEach((percentage) => {
-      let weight = Math.round(this.state.inputOneRepMaxWeight * percentage);
+      let weight = Math.round(inputWeight * percentage);
       const weightRemainder = weight % 5;
       if (weightRemainder) {
         weight = weight + (5 - weightRemainder);
@@ -205,14 +179,15 @@ export default class App extends React.Component {
     this.setState({
       calculatedOneRepMaxWeights: weightPercentages,
       isPercentagesCalculated: true,
+      inputOneRepMaxWeight: inputWeight,
     });
 
-    AsyncStorage.setItem(LAST_MAX_WEIGHT, this.state.inputOneRepMaxWeight);
+    AsyncStorage.setItem(LAST_MAX_WEIGHT, inputWeight);
   }
 
-  calculateWeights() {
+  calculateWeights(inputWeight) {
     const calculatedWeights = [];
-    let oneSideWeights = (this.state.inputWeight - this.state.barbellWeight) / 2;
+    let oneSideWeights = (inputWeight - this.state.barbellWeight) / 2;
 
     this.state.weights.forEach((weight) => {
       if (this.state.weightMap[weight]) {
@@ -232,12 +207,13 @@ export default class App extends React.Component {
 
     this.setState({
       calculatedWeights,
-      calculatedWeight: this.state.inputWeight - (oneSideWeights * 2),
+      calculatedWeight: inputWeight - (oneSideWeights * 2),
       leftoverWeight: oneSideWeights * 2,
       isWeightsCalculated: true,
+      inputWeight,
     });
 
-    AsyncStorage.setItem(LAST_INPUT_WEIGHT, this.state.inputWeight);
+    AsyncStorage.setItem(LAST_INPUT_WEIGHT, inputWeight);
   }
 
   toggleWeightCheckbox = (weight) => {
@@ -250,20 +226,20 @@ export default class App extends React.Component {
       weightMap,
     }, () => {
       AsyncStorage.setItem(LAST_WEIGHT_MAP, JSON.stringify(this.state.weightMap));
-      this.calculateWeights();
+      this.calculateWeights(this.state.inputWeight);
     });
   }
 
   setBarbellWeight = (barbellWeight) => {
     this.setState({ barbellWeight }, () => {
       AsyncStorage.setItem(LAST_BARBELL_WEIGHT, this.state.barbellWeight);
-      this.calculateWeights();
+      this.calculateWeights(this.state.inputWeight);
     });
   }
 
   setWeightAndCalculate = (inputWeight) => {
     this.setState({ inputWeight }, () => {
-      this.onPressCalculate();
+      this.onPressCalculateWeights(this.state.inputWeight);
     });
   }
 }

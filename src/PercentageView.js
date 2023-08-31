@@ -1,52 +1,36 @@
-import React from 'react';
-import { Button, Card, CardItem, Input, Item, Label, Text } from 'native-base';
-import { StyleSheet, View } from 'react-native';
+import { useState } from 'react';
+import { View } from 'react-native';
+import { Button, Card, TextInput } from 'react-native-paper';
 import PercentageResults from './PercentageResults';
 
-export default class PercentageView extends React.Component {
-  render() {
-    return (
-      <View>
-        <Card>
-          <CardItem>
-            <Item floatingLabel>
-              <Label>One rep max weight</Label>
-              <Input
-                keyboardType='numeric'
-                value={this.props.inputOneRepMaxWeight}
-                onChangeText={(text) => this.props.onChangeSetOneRepMaxWeight(text)}
-              />
-            </Item>
-          </CardItem>
-          <CardItem>
-            <View style={styles.calculateButton}>
-              <Button
-                primary
-                onPress={() => this.props.onPressCalculate('percents')}
-              >
-                <Text>Calculate Percentages</Text>
-              </Button>
-            </View>
-          </CardItem>
-        </Card>
-        <View>
-        </View>
+export default PercentageView = (props) => {
+  const [inputWeight, setInputWeight] = useState(props.inputOneRepMaxWeight);
+
+  return (
+    <>
+      <Card>
+        <Card.Content>
+          <TextInput
+            label="One rep max weight"
+            value={inputWeight}
+            onChangeText={setInputWeight}
+            keyboardType="numeric"
+          />
+        </Card.Content>
+        <Card.Actions>
+          <Button mode="contained" onPress={() => props.onPressCalculate(inputWeight)}>
+            Calculate Percentages
+          </Button>
+        </Card.Actions>
+      </Card>
+      <View style={{ marginTop: 20 }}>
         <PercentageResults
-          calculatedOneRepMaxWeights={this.props.calculatedOneRepMaxWeights}
-          changeView={this.props.changeView}
-          isPercentagesCalculated={this.props.isPercentagesCalculated}
-          setWeightAndCalculate={this.props.setWeightAndCalculate}
+          calculatedOneRepMaxWeights={props.calculatedOneRepMaxWeights}
+          changeView={props.changeView}
+          isPercentagesCalculated={props.isPercentagesCalculated}
+          setWeightAndCalculate={props.setWeightAndCalculate}
         />
       </View>
-    );
-  }
+    </>
+  );
 }
-
-const styles = StyleSheet.create({
-  calculateButton: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
