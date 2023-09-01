@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Barbell Weight Calculator",
-    "version": "1.4.0",
+    "version": "2.0.0",
     "slug": "barbell-native",
     "icon": "./assets/app-icon.png",
     "ios": {
@@ -10,7 +10,12 @@
     "android": {
       "package": "com.seewes.barbell",
       "permissions": [],
-      "versionCode": 6
+      "versionCode": 7
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fdbc27e0-5710-11e8-97aa-83c5e4b60ada"
+      }
     }
   }
 }
