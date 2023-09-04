@@ -1,36 +1,34 @@
-import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react-native';
 import App from './App';
-import { shallow } from 'enzyme';
-import PercentageView from './src/PercentageView';
-import PlateView from './src/PlateView';
-import SettingsView from './src/SettingsView';
 
-const setup = (props) => {
-  return shallow(<App />);
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  multiGet: jest.fn,
+}));
+
+const setup = () => {
+  render(<App />);
 }
 
 describe('App', () => {
   it('renders PlateView by default', () => {
-    const wrapper = setup();
-    wrapper.setState({ isFontLoaded: true })
-    expect(wrapper.find(PercentageView)).toHaveLength(0);
-    expect(wrapper.find(PlateView)).toHaveLength(1);
-    expect(wrapper.find(SettingsView)).toHaveLength(0);
+    setup();
+    const input = screen.getAllByText('Target barbell weight');
+    expect(input.length).not.toBe(0);
   });
 
-  it('renders PercentageView when currentView = percents', () => {
-    const wrapper = setup();
-    wrapper.setState({ isFontLoaded: true, currentView: 'percents' })
-    expect(wrapper.find(PercentageView)).toHaveLength(1);
-    expect(wrapper.find(PlateView)).toHaveLength(0);
-    expect(wrapper.find(SettingsView)).toHaveLength(0);
+  it('renders PercentageView', () => {
+    setup();
+    const navigation = screen.getByRole('button', { name: 'Percentages' });
+    fireEvent(navigation, 'onClick');
+    const input = screen.getAllByText('One rep max weight');
+    expect(input.length).not.toBe(0);
   });
 
-  it('renders SettingsView when currentView = settings', () => {
-    const wrapper = setup();
-    wrapper.setState({ isFontLoaded: true, currentView: 'settings' })
-    expect(wrapper.find(PercentageView)).toHaveLength(0);
-    expect(wrapper.find(PlateView)).toHaveLength(0);
-    expect(wrapper.find(SettingsView)).toHaveLength(1);
+  it('renders SettingsView', () => {
+    setup();
+    const navigation = screen.getByRole('button', { name: 'Settings' });
+    fireEvent(navigation, 'onClick');
+    const input = screen.getAllByText('Default Barbell Weight');
+    expect(input.length).not.toBe(0);
   });
 });
