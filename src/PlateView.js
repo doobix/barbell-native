@@ -4,7 +4,7 @@ import { Button, Card, TextInput } from 'react-native-paper';
 import PlateResults from './PlateResults';
 
 export default PlateView = (props) => {
-  const [inputWeight, setInputWeight] = useState(props.inputWeight);
+  const [inputWeight, setInputWeight] = useState(props.inputWeight.toString());
 
   return (
     <>

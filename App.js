@@ -139,10 +139,6 @@ export default class App extends React.Component {
     this.setState({ inputOneRepMaxWeight });
   }
 
-  onChangeSetWeight = (inputWeight) => {
-    this.setState({ inputWeight });
-  }
-
   onPressCalculateWeights = (weight) => {
     Keyboard.dismiss();
     this.calculateWeights(weight);
