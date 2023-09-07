@@ -4,7 +4,7 @@ import { Button, Card, TextInput } from 'react-native-paper';
 import PercentageResults from './PercentageResults';
 
 export default PercentageView = (props) => {
-  const [inputWeight, setInputWeight] = useState(props.inputOneRepMaxWeight);
+  const [inputWeight, setInputWeight] = useState(props.inputOneRepMaxWeight.toString());
 
   return (
     <>

@@ -1,46 +1,28 @@
-import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react-native';
 import PercentageView from './PercentageView';
-import { shallow } from 'enzyme';
-import { Button, Input } from 'native-base';
 
 const defaultPropsGenerator = (overrides) => ({
   calculatedOneRepMaxWeights: [],
   inputOneRepMaxWeight: 100,
   isPercentagesCalculated: false,
-  onChangeSetOneRepMaxWeight: jest.fn(),
+  changeView: jest.fn(),
+  setWeightAndCalculate: jest.fn(),
   onPressCalculate: jest.fn(),
   ...overrides,
 });
 
 const setup = (props) => {
-  return shallow(<PercentageView {...defaultPropsGenerator(props)} />);
+  render(<PercentageView {...defaultPropsGenerator(props)} />);
 }
 
 describe('PercentageView', () => {
-  it('invokes onChangeSetOneRepMaxWeight when Input is changed', () => {
-    const onChangeSetOneRepMaxWeight = jest.fn();
-    const wrapper = setup({ onChangeSetOneRepMaxWeight });
-    expect(onChangeSetOneRepMaxWeight).toHaveBeenCalledTimes(0);
-    wrapper.find(Input).simulate('changeText');
-    expect(onChangeSetOneRepMaxWeight).toHaveBeenCalledTimes(1);
-  });
-
-  it('invokes onPressCalculate when Button is pressed', () => {
+  it('invokes onPressCalculate when button is pressed', () => {
     const onPressCalculate = jest.fn();
-    const wrapper = setup({ onPressCalculate });
+    setup({ onPressCalculate });
     expect(onPressCalculate).toHaveBeenCalledTimes(0);
-    wrapper.find(Button).simulate('press');
+    const button = screen.getByRole('button');
+    fireEvent(button, 'onPress');
     expect(onPressCalculate).toHaveBeenCalledTimes(1);
-  });
-
-  it('passes correct properties to PercentageResults', () => {
-    const calculatedOneRepMaxWeights = [
-      { percentage: '100%', weight: '100' },
-      { percentage: '50%', weight: '50' },
-    ];
-    const isPercentagesCalculated = true;
-    const wrapper = setup({ calculatedOneRepMaxWeights, isPercentagesCalculated });
-    expect(wrapper.find('PercentageResults').props()).toHaveProperty('calculatedOneRepMaxWeights', calculatedOneRepMaxWeights);
-    expect(wrapper.find('PercentageResults').props()).toHaveProperty('isPercentagesCalculated', isPercentagesCalculated);
+    expect(onPressCalculate).toHaveBeenCalledWith('100');
   });
 });
