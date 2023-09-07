@@ -4,7 +4,7 @@ import PlateView from './PlateView';
 const defaultPropsGenerator = (overrides) => ({
   calculatedWeight: 0,
   calculatedWeights: [],
-  inputWeight: 0,
+  inputWeight: 100,
   isWeightsCalculated: false,
   leftoverWeight: 0,
   onPressCalculate: jest.fn(),
@@ -23,5 +23,6 @@ describe('PlateView', () => {
     const button = screen.getByRole('button');
     fireEvent(button, 'onPress');
     expect(onPressCalculate).toHaveBeenCalledTimes(1);
+    expect(onPressCalculate).toHaveBeenCalledWith('100');
   });
 });
