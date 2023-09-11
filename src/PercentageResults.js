@@ -38,6 +38,7 @@ export default PercentageResults = (props) => {
         key={idx}
         onPress={setWeightAndChangeView}
         title={percentage}
+        testID="percentage-result"
       />
     );
   });

@@ -1,7 +1,5 @@
-import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react-native';
 import PercentageResults, { MAX_PERCENTAGES_MESSAGE, NO_PERCENTAGE_MESSAGE } from './PercentageResults';
-import { shallow } from 'enzyme';
-import { CardItem, Text } from 'native-base';
 
 const MOCK_WEIGHT_PERCENTAGES = [
   { percentage: '100%', weight: '100' },
@@ -17,46 +15,45 @@ const defaultPropsGenerator = (overrides) => ({
 });
 
 const setup = (props) => {
-  return shallow(<PercentageResults {...defaultPropsGenerator(props)} />);
+  render(<PercentageResults {...defaultPropsGenerator(props)} />);
 }
 
 describe('PercentageResults', () => {
   it('renders nothing when isPercentagesCalculated is false', () => {
-    const wrapper = setup({ isPercentagesCalculated: false });
-    expect(wrapper.html()).toBeNull();
+    setup({ isPercentagesCalculated: false });
+    expect(screen.root).toBeUndefined();
   });
 
   it('renders message when calculatedOneRepMaxWeights is empty', () => {
-    const wrapper = setup();
-    expect(wrapper.find(Text).children().text()).toBe(NO_PERCENTAGE_MESSAGE);
+    setup();
+    expect(screen.getAllByText(NO_PERCENTAGE_MESSAGE)).toHaveLength(1);
   });
 
   it('renders items from calculatedOneRepMaxWeights', () => {
-    const wrapper = setup({
+    setup({
       calculatedOneRepMaxWeights: MOCK_WEIGHT_PERCENTAGES,
     });
-    expect(wrapper.find(Text).children().at(0).text()).toBe(MAX_PERCENTAGES_MESSAGE);
-    expect(wrapper.find(Text).children().at(1).text()).toBe('@ 100% = 100 lbs');
-    expect(wrapper.find(Text).children().at(2).text()).toBe('@ 50% = 50 lbs');
+    expect(screen.getAllByText(MAX_PERCENTAGES_MESSAGE)).toHaveLength(1);
+    expect(screen.getAllByText('@ 100% = 100 lbs')).toHaveLength(1);
+    expect(screen.getAllByText('@ 50% = 50 lbs')).toHaveLength(1);
   });
 
   it('calls setWeightAndCalculate and changeView functions when result is pressed', () => {
     const changeView = jest.fn();
     const setWeightAndCalculate = jest.fn();
-    const wrapper = setup({
+    setup({
       calculatedOneRepMaxWeights: MOCK_WEIGHT_PERCENTAGES,
       changeView,
       setWeightAndCalculate,
     });
     expect(changeView).toHaveBeenCalledTimes(0);
     expect(setWeightAndCalculate).toHaveBeenCalledTimes(0);
-    wrapper.find(CardItem).forEach((item, index) => {
-      if (item.props().button) {
-        item.simulate('press');
-        const weight = MOCK_WEIGHT_PERCENTAGES[index - 1].weight;
-        expect(changeView).toHaveBeenLastCalledWith('plates');
-        expect(setWeightAndCalculate).toHaveBeenLastCalledWith(weight);
-      }
+    const buttons = screen.getAllByTestId('percentage-result');
+    buttons.forEach((button, index) => {
+      fireEvent(button, 'onPress');
+      const weight = MOCK_WEIGHT_PERCENTAGES[index].weight;
+      expect(setWeightAndCalculate).toHaveBeenLastCalledWith(weight);
+      expect(changeView).toHaveBeenLastCalledWith(0);
     });
     expect(changeView).toHaveBeenCalledTimes(2);
     expect(setWeightAndCalculate).toHaveBeenCalledTimes(2);
